@@ -26,7 +26,7 @@ app.post('/auth/register', registerValidation, handleValidationErrors, UserContr
 app.get('/auth/me', checkAuth, UserController.getMe);
 
 
-
+// Патом нужно убрать
 app.get('/tags', PostController.getLastTags);
 
 app.get('/posts', PostController.getAll);
