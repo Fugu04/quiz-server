@@ -1,7 +1,5 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import multer from 'multer';
-import cors from 'cors';
 
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 import checkAuth from './utils/checkAuth.js';
@@ -17,20 +15,7 @@ mongoose.connect('mongodb+srv://tilekakhmetov2021:wwwwww@cluster0.vppdbca.mongod
 const app = express();
 const port = 4444;
 
-const storage = multer.diskStorage({
-    destination: (_, __, cb) => {
-        cb(null, 'uploads');
-    },
-    filename: (_, file, cb) => {
-        cb(null, file.originalname);
-    },
-});
-
-const upload = multer({ storage });
-
 app.use(express.json());
-app.use('/uploads', express.static('uploads'));
-app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('complete');
@@ -40,12 +25,7 @@ app.post('/auth/login', loginValidation, handleValidationErrors, UserController.
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.get('/auth/me', checkAuth, UserController.getMe);
 
-app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
-    console.log(`Server running on http://localhost:${ port }/${ req.file.originalname }`);
-    res.json({
-        url: `/upload/${ req.file.originalname }`,
-    });
-});
+
 
 app.get('/tags', PostController.getLastTags);
 
