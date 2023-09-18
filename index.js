@@ -26,16 +26,6 @@ app.post('/auth/register', registerValidation, handleValidationErrors, UserContr
 app.get('/auth/me', checkAuth, UserController.getMe);
 
 
-// Патом нужно убрать
-app.get('/tags', PostController.getLastTags);
-
-app.get('/posts', PostController.getAll);
-app.get('/posts/tags', PostController.getLastTags);
-// app.get('/posts/:id', PostController.getOne);
-app.post('/posts', checkAuth, postCreateValidation, PostController.create);
-// app.delete('/posts/:id', checkAuth, PostController.remove);
-app.patch('/posts/:id', checkAuth, postCreateValidation, PostController.update);
-
 app.listen(port, (err) => {
     if(err){
         return console.log(err);
